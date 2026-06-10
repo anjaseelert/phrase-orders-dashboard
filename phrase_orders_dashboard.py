@@ -153,6 +153,7 @@ def generate_html(orders: list[dict]) -> str:
   .badge-in_progress {{ background: var(--amber-bg); color: var(--amber-text); }}
   .badge-completed        {{ background: var(--green-bg); color: var(--green-text); }}
   .badge-cancelled   {{ background: var(--gray-bg);  color: var(--gray-text); }}
+  .badge-completed   {{ background: var(--green-bg); color: var(--green-text); }}
   .badge-unknown     {{ background: var(--red-bg);   color: var(--red-text); }}
   .progress-bar-bg {{ height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; margin: 8px 0 3px; }}
   .progress-bar-fill {{ height: 100%; border-radius: 99px; }}
@@ -210,7 +211,7 @@ function progressColor(p) {{
 }}
 
 function badge(state) {{
-  const labels = {{confirmed:'Confirmed',in_progress:'In progress',done:'Done',cancelled:'Cancelled'}};
+  const labels = {{confirmed:'Confirmed',in_progress:'In progress',completed:'Completed',done:'Completed',cancelled:'Cancelled'}};
   const cls = labels[state] ? state : 'unknown';
   return `<span class="badge badge-${{cls}}">${{labels[state] || state}}</span>`;
 }}
