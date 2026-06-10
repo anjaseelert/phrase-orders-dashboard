@@ -16,6 +16,7 @@ Run daily (or set up a cron job) to keep the dashboard fresh.
 """
 
 import json
+import os
 import time
 import sys
 import requests
@@ -23,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # ── CONFIGURE ─────────────────────────────────────────────────────────────────
-PHRASE_TOKEN = "YOUR_API_TOKEN_HERE"
+PHRASE_TOKEN = os.environ.get("PHRASE_TOKEN", "YOUR_API_TOKEN_HERE")
 BASE_URL     = "https://api.phrase.com/v2"
 OUTPUT_FILE  = "phrase_orders_dashboard.html"
 # ─────────────────────────────────────────────────────────────────────────────

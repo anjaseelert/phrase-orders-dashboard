@@ -30,9 +30,7 @@ jobs:
       - name: Run dashboard script
         env:
           PHRASE_TOKEN: ${{ secrets.PHRASE_TOKEN }}
-        run: |
-          sed -i "s/PHRASE_TOKEN = \"YOUR_API_TOKEN_HERE\"/PHRASE_TOKEN = \"$PHRASE_TOKEN\"/" phrase_orders_dashboard.py
-          python phrase_orders_dashboard.py
+        run: python phrase_orders_dashboard.py
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
