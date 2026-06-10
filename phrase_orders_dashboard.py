@@ -274,7 +274,7 @@ function render() {{
   const twoWeeksAgo = new Date();
   twoWeeksAgo.setDate(today.getDate() - 14);
   document.getElementById('date-to').value = today.toISOString().slice(0, 10);
-  document.getElementById('date-from').value = twoWeeksAgo.toISOString().slice(0, 10);{
+  document.getElementById('date-from').value = twoWeeksAgo.toISOString().slice(0, 10);
   const projects = [...new Map(ALL_ORDERS.map(o=>[o._project_id,o._project_name])).entries()]
     .sort((a,b)=>a[1].localeCompare(b[1]));
   const sel = document.getElementById('filter-project');
