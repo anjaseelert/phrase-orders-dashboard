@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 7 * * *'   # every day at 7:00 UTC
   workflow_dispatch:        # allows manual trigger from GitHub UI
+  push:
+    branches:
+      - main               # redeploy automatically on every push to main
 
 permissions:
   contents: write
