@@ -16,6 +16,7 @@ Run daily (or set up a cron job) to keep the dashboard fresh.
 """
 
 import json
+import os
 import time
 import sys
 import requests
@@ -23,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # ── CONFIGURE ─────────────────────────────────────────────────────────────────
-PHRASE_TOKEN = "42078bc0161e06b04f36931645ce4fcab8daf4bc6c90eeb10b40c2910fc96b56"
+PHRASE_TOKEN = os.environ.get("PHRASE_TOKEN", "YOUR_API_TOKEN_HERE")
 BASE_URL     = "https://api.phrase.com/v2"
 OUTPUT_FILE  = "phrase_orders_dashboard.html"
 # ─────────────────────────────────────────────────────────────────────────────
@@ -268,6 +269,12 @@ function render() {{
 }}
 
 (function init() {{
+  // Default date range: last 14 days
+  const today = new Date();
+  const twoWeeksAgo = new Date();
+  twoWeeksAgo.setDate(today.getDate() - 14);
+  document.getElementById('date-to').value = today.toISOString().slice(0, 10);
+  document.getElementById('date-from').value = twoWeeksAgo.toISOString().slice(0, 10);
   const projects = [...new Map(ALL_ORDERS.map(o=>[o._project_id,o._project_name])).entries()]
     .sort((a,b)=>a[1].localeCompare(b[1]));
   const sel = document.getElementById('filter-project');
