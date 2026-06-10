@@ -23,7 +23,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # ── CONFIGURE ─────────────────────────────────────────────────────────────────
-PHRASE_TOKEN = "42078bc0161e06b04f36931645ce4fcab8daf4bc6c90eeb10b40c2910fc96b56"
+PHRASE_TOKEN = "YOUR_API_TOKEN_HERE"
 BASE_URL     = "https://api.phrase.com/v2"
 OUTPUT_FILE  = "phrase_orders_dashboard.html"
 # ─────────────────────────────────────────────────────────────────────────────
@@ -153,6 +153,7 @@ def generate_html(orders: list[dict]) -> str:
   .badge-in_progress {{ background: var(--amber-bg); color: var(--amber-text); }}
   .badge-completed        {{ background: var(--green-bg); color: var(--green-text); }}
   .badge-cancelled   {{ background: var(--gray-bg);  color: var(--gray-text); }}
+  .badge-completed   {{ background: var(--green-bg); color: var(--green-text); }}
   .badge-unknown     {{ background: var(--red-bg);   color: var(--red-text); }}
   .progress-bar-bg {{ height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; margin: 8px 0 3px; }}
   .progress-bar-fill {{ height: 100%; border-radius: 99px; }}
@@ -210,7 +211,7 @@ function progressColor(p) {{
 }}
 
 function badge(state) {{
-  const labels = {{confirmed:'Confirmed',in_progress:'In progress',done:'Done',cancelled:'Cancelled'}};
+  const labels = {{confirmed:'Confirmed',in_progress:'In progress',completed:'Completed',done:'Completed',cancelled:'Cancelled'}};
   const cls = labels[state] ? state : 'unknown';
   return `<span class="badge badge-${{cls}}">${{labels[state] || state}}</span>`;
 }}
