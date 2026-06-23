@@ -129,12 +129,7 @@ def generate_html(orders: list[dict]) -> str:
             border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }}
   h1 {{ font-size: 20px; font-weight: 600; }}
   .generated {{ font-size: 12px; color: var(--muted); }}
-  .summary {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-              gap: 12px; margin-bottom: 1.75rem; }}
-  .metric {{ background: var(--surface); border: 1px solid var(--border);
-             border-radius: 10px; padding: 1rem; }}
-  .metric-label {{ font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }}
-  .metric-value {{ font-size: 24px; font-weight: 600; }}
+
   .toolbar {{ display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: center; }}
   .toolbar select, .toolbar input {{
     font-size: 13px; padding: 6px 10px; border: 1px solid var(--border);
@@ -173,14 +168,6 @@ def generate_html(orders: list[dict]) -> str:
     <span class="generated">Generated {generated}</span>
   </header>
 
-  <div class="summary">
-    <div class="metric"><div class="metric-label">Total orders</div><div class="metric-value">{total}</div></div>
-    <div class="metric"><div class="metric-label">In progress</div><div class="metric-value">{in_progress}</div></div>
-    <div class="metric"><div class="metric-label">Completed</div><div class="metric-value">{completed}</div></div>
-    <div class="metric"><div class="metric-label">Avg. progress</div><div class="metric-value">{avg_pct}%</div></div>
-    <div class="metric"><div class="metric-label">Projects</div><div class="metric-value">{projects_with_orders}</div></div>
-  </div>
-
   <div class="toolbar">
     <select id="filter-project" onchange="render()">
       <option value="">All projects</option>
@@ -197,6 +184,7 @@ def generate_html(orders: list[dict]) -> str:
     <label style="font-size:13px;color:var(--muted);">To</label>
     <input id="date-to" type="date" onchange="render()" style="font-size:13px;">
     <span id="count"></span>
+    <span id="inline-summary" style="font-size:12px;color:var(--muted);margin-left:8px;"></span>
   </div>
 
   <div id="list"></div>
@@ -235,6 +223,9 @@ function render() {{
     .sort((a,b) => new Date(b.created_at||0) - new Date(a.created_at||0));
 
   document.getElementById('count').textContent = `${{orders.length}} order${{orders.length===1?'':'s'}}`;
+  const inProg = orders.filter(o => o.state === 'in_progress' || o.state === 'confirmed').length;
+  const comp   = orders.filter(o => o.state === 'completed').length;
+  document.getElementById('inline-summary').textContent = `· ${{comp}} completed · ${{inProg}} in progress`;
 
   const list = document.getElementById('list');
   if (!orders.length) {{
